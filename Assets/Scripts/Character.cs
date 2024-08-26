@@ -17,6 +17,7 @@ public class Character : MonoBehaviour, IMovable, IAbleToGrab
     public void Move(Vector2 input)
     {
         Vector3 movement = new Vector3(input.x, 0, input.y).normalized * speed;
+        movement += Vector3.down * 10;
         movement *= Time.deltaTime;
         movement = transform.TransformDirection(movement);
         characterController.Move(movement);
