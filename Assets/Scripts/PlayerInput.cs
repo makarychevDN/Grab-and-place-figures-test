@@ -30,6 +30,8 @@ public class PlayerInput : MonoBehaviour
                 else
                     _ableToGrab.Grab();
             }
+
+            _ableToGrab.RotateGrabbedObject(Input.GetAxisRaw("Mouse ScrollWheel"));
         }
     }
 }

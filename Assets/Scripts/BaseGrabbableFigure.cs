@@ -17,6 +17,7 @@ public abstract class BaseGrabbableFigure : MonoBehaviour, IAbleToBeGrabbed
 
     protected HashSet<Collider> _conflictingColliders = new();
     protected bool _magnetizedMod;
+    protected float _rotationDelta = 450;
 
     public virtual void BecameGrabbed()
     {
@@ -48,6 +49,11 @@ public abstract class BaseGrabbableFigure : MonoBehaviour, IAbleToBeGrabbed
             transform.position = head.position + head.forward * distanceFromHeadWhenUnplacable;
             UpdateMaterial(unplacableMaterial);
         }
+    }
+
+    public void RotateAroundYAxis(float rotationInput)
+    {
+        transform.Rotate(new Vector3(0, rotationInput * _rotationDelta, 0));
     }
 
     public bool CanBePlaced()

@@ -70,4 +70,12 @@ public class Character : MonoBehaviour, IMovable, IAbleToGrab
         _grabbedFigure.BecamePlaced();
         _grabbedFigure = null;
     }
+
+    public void RotateGrabbedObject(float inputValue)
+    {
+        if (!IsGrabbingNow)
+            return;
+
+        _grabbedFigure.RotateAroundYAxis(inputValue);
+    }
 }
