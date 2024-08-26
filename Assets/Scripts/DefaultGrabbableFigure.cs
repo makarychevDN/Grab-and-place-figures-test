@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class SphereGrabbableFigure : BaseGrabbableFigure
+public class DefaultGrabbableFigure : BaseGrabbableFigure
 {
     private float _offcetToAvoidCollisionWithTargetSurface = 0.00001f;
 
