@@ -3,7 +3,8 @@ using UnityEngine;
 public class Character : MonoBehaviour, IMovable, IAbleToGrab
 {
     [SerializeField] private float speed;
-    [SerializeField] private CharacterController characterController;
+    [SerializeField] private Rigidbody rigidBody;
+    [SerializeField] private Transform cameraTransform;
     [SerializeField] private Transform head;
     private float _minHeadRotationAngle = -60.0f;
     private float _maxHeadRotationAngle = 60.0f;
@@ -17,10 +18,9 @@ public class Character : MonoBehaviour, IMovable, IAbleToGrab
     public void Move(Vector2 input)
     {
         Vector3 movement = new Vector3(input.x, 0, input.y).normalized * speed;
-        movement += Vector3.down * 10;
-        movement *= Time.deltaTime;
-        movement = transform.TransformDirection(movement);
-        characterController.Move(movement);
+        movement *= Time.fixedDeltaTime;
+        movement = head.TransformDirection(movement);
+        rigidBody.velocity = new Vector3(movement.x, 0, movement.z);
 
         if (IsGrabbingNow)
             UpdatePositionOfGrabbedObject(_grabbedFigure);
@@ -28,10 +28,10 @@ public class Character : MonoBehaviour, IMovable, IAbleToGrab
 
     public void Rotate(Vector2 input)
     {
-        transform.Rotate(0, input.x, 0);
+        head.Rotate(0, input.x, 0);
         _headRotationAngle -= input.y;
         _headRotationAngle = Mathf.Clamp(_headRotationAngle, _minHeadRotationAngle, _maxHeadRotationAngle);
-        head.transform.localEulerAngles = new Vector3(_headRotationAngle, 0, 0);
+        cameraTransform.transform.localEulerAngles = new Vector3(_headRotationAngle, 0, 0);
 
         if (IsGrabbingNow)
             UpdatePositionOfGrabbedObject(_grabbedFigure);
@@ -40,7 +40,7 @@ public class Character : MonoBehaviour, IMovable, IAbleToGrab
     private void UpdatePositionOfGrabbedObject(IAbleToBeGrabbed ableToBeGrabbed)
     {
         Physics.Raycast(RaycastFromMiddleOfScreen(), out RaycastHit hit);
-        ableToBeGrabbed.Drag(hit, head, _distanceOfUnplacableDraggedObject, _maximumDistanceOfDraggedPlacableObject);
+        ableToBeGrabbed.Drag(hit, cameraTransform, _distanceOfUnplacableDraggedObject, _maximumDistanceOfDraggedPlacableObject);
     }
 
     public void Grab()
