@@ -985,6 +985,7 @@ MonoBehaviour:
   placableMaterial: {fileID: 2100000, guid: 6b69700128116e74eacd4201710a7ede, type: 2}
   unplacableMaterial: {fileID: 2100000, guid: 1e4ef0237bcfc874488e2e2af8c62496, type: 2}
   figureRenderer: {fileID: 1381997839}
+  figureCollider: {fileID: 1381997838}
 --- !u!1 &1424366448
 GameObject:
   m_ObjectHideFlags: 0
@@ -1107,6 +1108,7 @@ MonoBehaviour:
   placableMaterial: {fileID: 2100000, guid: 6b69700128116e74eacd4201710a7ede, type: 2}
   unplacableMaterial: {fileID: 2100000, guid: 1e4ef0237bcfc874488e2e2af8c62496, type: 2}
   figureRenderer: {fileID: 1424366450}
+  figureCollider: {fileID: 1424366449}
 --- !u!1 &1783921567
 GameObject:
   m_ObjectHideFlags: 0

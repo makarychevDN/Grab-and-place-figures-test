@@ -25,7 +25,7 @@ public class PlayerInput : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.Mouse0))
             {
-                if (_ableToGrab.CheckIsGrabbingNow)
+                if (_ableToGrab.IsGrabbingNow)
                     _ableToGrab.Place();
                 else
                     _ableToGrab.Grab();

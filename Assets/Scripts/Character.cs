@@ -8,9 +8,10 @@ public class Character : MonoBehaviour, IMovable, IAbleToGrab
     private float _minHeadRotationAngle = -60.0f;
     private float _maxHeadRotationAngle = 60.0f;
     private float _headRotationAngle = 0;
+    private float _expetedDistanceOfDraggedObject = 3;
     private IAbleToBeGrabbed _grabbedFigure;
 
-    public bool CheckIsGrabbingNow => _grabbedFigure != null;
+    public bool IsGrabbingNow => _grabbedFigure != null;
 
     public void Move(Vector2 input)
     {
@@ -18,6 +19,9 @@ public class Character : MonoBehaviour, IMovable, IAbleToGrab
         movement *= Time.deltaTime;
         movement = transform.TransformDirection(movement);
         characterController.Move(movement);
+
+        if (IsGrabbingNow)
+            UpdatePositionOfGrabbedObject(_grabbedFigure);
     }
 
     public void Rotate(Vector2 input)
@@ -26,7 +30,13 @@ public class Character : MonoBehaviour, IMovable, IAbleToGrab
         _headRotationAngle -= input.y;
         _headRotationAngle = Mathf.Clamp(_headRotationAngle, _minHeadRotationAngle, _maxHeadRotationAngle);
         head.transform.localEulerAngles = new Vector3(_headRotationAngle, 0, 0);
+
+        if (IsGrabbingNow)
+            UpdatePositionOfGrabbedObject(_grabbedFigure);
     }
+
+    private void UpdatePositionOfGrabbedObject(IAbleToBeGrabbed ableToBeGrabbed) 
+        => ableToBeGrabbed.Drag(head.transform.position + head.forward * _expetedDistanceOfDraggedObject);
 
     public void Grab()
     {
