@@ -981,7 +981,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: db4b6a365ab61244ca0494c99d74c22c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  defaultMaterial: {fileID: 0}
+  defaultMaterial: {fileID: 2100000, guid: 38059f8df0659654382b5860f9a4091b, type: 2}
   placableMaterial: {fileID: 2100000, guid: 6b69700128116e74eacd4201710a7ede, type: 2}
   unplacableMaterial: {fileID: 2100000, guid: 1e4ef0237bcfc874488e2e2af8c62496, type: 2}
   figureRenderer: {fileID: 1381997839}
@@ -1103,7 +1103,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: db4b6a365ab61244ca0494c99d74c22c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  defaultMaterial: {fileID: 0}
+  defaultMaterial: {fileID: 2100000, guid: a82f2ff3682340b459427ed32e16f824, type: 2}
   placableMaterial: {fileID: 2100000, guid: 6b69700128116e74eacd4201710a7ede, type: 2}
   unplacableMaterial: {fileID: 2100000, guid: 1e4ef0237bcfc874488e2e2af8c62496, type: 2}
   figureRenderer: {fileID: 1424366450}

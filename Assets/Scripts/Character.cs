@@ -8,6 +8,9 @@ public class Character : MonoBehaviour, IMovable, IAbleToGrab
     private float _minHeadRotationAngle = -60.0f;
     private float _maxHeadRotationAngle = 60.0f;
     private float _headRotationAngle = 0;
+    private IAbleToBeGrabbed _grabbedFigure;
+
+    public bool CheckIsGrabbingNow => _grabbedFigure != null;
 
     public void Move(Vector2 input)
     {
@@ -37,12 +40,14 @@ public class Character : MonoBehaviour, IMovable, IAbleToGrab
             if (grabbableFigure != null)
             {
                 grabbableFigure.BecameGrabbed();
+                _grabbedFigure = grabbableFigure;
             }
         }
     }
 
     public void Place()
     {
-        throw new System.NotImplementedException();
+        _grabbedFigure.BecamePlaced();
+        _grabbedFigure = null;
     }
 }

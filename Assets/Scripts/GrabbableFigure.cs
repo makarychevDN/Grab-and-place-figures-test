@@ -14,6 +14,6 @@ public class GrabbableFigure : MonoBehaviour, IAbleToBeGrabbed
 
     public void BecamePlaced()
     {
-        throw new System.NotImplementedException();
+        figureRenderer.material = defaultMaterial;
     }
 }
