@@ -46,7 +46,7 @@ public class Character : MonoBehaviour, IMovable, IAbleToGrab
     {
         if (Physics.Raycast(RaycastFromMiddleOfScreen(), out RaycastHit hit))
         {
-            var grabbableFigure = hit.transform.GetComponent<IAbleToBeGrabbed>();
+            var grabbableFigure = hit.transform.GetComponentInParent<IAbleToBeGrabbed>();
             if (grabbableFigure != null)
             {
                 grabbableFigure.BecameGrabbed();
