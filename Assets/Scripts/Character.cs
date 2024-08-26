@@ -27,7 +27,21 @@ public class Character : MonoBehaviour, IMovable, IAbleToGrab
 
     public void Grab()
     {
-        print("Grab!!!");
+        if (Input.GetMouseButtonDown(0))
+        {
+            Vector3 point = new Vector3(Camera.main.pixelWidth * 0.5f, Camera.main.pixelHeight * 0.5f);
+            Ray ray = Camera.main.ScreenPointToRay(point);
+
+            RaycastHit hit;
+            if (Physics.Raycast(ray, out hit))
+            {
+                var grabbableFigure = hit.transform.GetComponent<GrabbableFigure>();
+                if (grabbableFigure != null)
+                {
+                    grabbableFigure.BecameGrabbed();
+                }
+            }
+        }
     }
 
     public void Place()
