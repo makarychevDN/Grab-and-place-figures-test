@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class GrabbableFigure : MonoBehaviour
+public class GrabbableFigure : MonoBehaviour, IAbleToBeGrabbed
 {
     [SerializeField] private Material defaultMaterial;
     [SerializeField] private Material placableMaterial;
@@ -10,5 +10,10 @@ public class GrabbableFigure : MonoBehaviour
     public void BecameGrabbed()
     {
         figureRenderer.material = placableMaterial;
+    }
+
+    public void BecamePlaced()
+    {
+        throw new System.NotImplementedException();
     }
 }
