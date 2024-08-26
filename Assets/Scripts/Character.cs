@@ -64,6 +64,9 @@ public class Character : MonoBehaviour, IMovable, IAbleToGrab
 
     public void Place()
     {
+        if (!_grabbedFigure.CanBePlaced())
+            return;
+
         _grabbedFigure.BecamePlaced();
         _grabbedFigure = null;
     }

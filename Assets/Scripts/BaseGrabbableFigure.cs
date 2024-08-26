@@ -27,6 +27,9 @@ public abstract class BaseGrabbableFigure : MonoBehaviour, IAbleToBeGrabbed
 
     public virtual void BecamePlaced()
     {
+        if (!CanBePlaced())
+            return;
+
         figureCollider.isTrigger = false;
         figureRenderer.material = defaultMaterial;
         gameObject.layer = LayerMask.NameToLayer("Default");
