@@ -8,7 +8,8 @@ public class Character : MonoBehaviour, IMovable, IAbleToGrab
     private float _minHeadRotationAngle = -60.0f;
     private float _maxHeadRotationAngle = 60.0f;
     private float _headRotationAngle = 0;
-    private float _expetedDistanceOfDraggedObject = 3;
+    private float _distanceOfUnplacableDraggedObject = 3;
+    private float _maximumDistanceOfDraggedPlacableObject = 5;
     private IAbleToBeGrabbed _grabbedFigure;
 
     public bool IsGrabbingNow => _grabbedFigure != null;
@@ -35,16 +36,15 @@ public class Character : MonoBehaviour, IMovable, IAbleToGrab
             UpdatePositionOfGrabbedObject(_grabbedFigure);
     }
 
-    private void UpdatePositionOfGrabbedObject(IAbleToBeGrabbed ableToBeGrabbed) 
-        => ableToBeGrabbed.Drag(head.transform.position + head.forward * _expetedDistanceOfDraggedObject);
+    private void UpdatePositionOfGrabbedObject(IAbleToBeGrabbed ableToBeGrabbed)
+    {
+        Physics.Raycast(RaycastFromMiddleOfScreen(), out RaycastHit hit);
+        ableToBeGrabbed.Drag(hit, head, _distanceOfUnplacableDraggedObject, _maximumDistanceOfDraggedPlacableObject);
+    }
 
     public void Grab()
     {
-        Vector3 point = new Vector3(Camera.main.pixelWidth * 0.5f, Camera.main.pixelHeight * 0.5f);
-        Ray ray = Camera.main.ScreenPointToRay(point);
-
-        RaycastHit hit;
-        if (Physics.Raycast(ray, out hit))
+        if (Physics.Raycast(RaycastFromMiddleOfScreen(), out RaycastHit hit))
         {
             var grabbableFigure = hit.transform.GetComponent<IAbleToBeGrabbed>();
             if (grabbableFigure != null)
@@ -53,6 +53,13 @@ public class Character : MonoBehaviour, IMovable, IAbleToGrab
                 _grabbedFigure = grabbableFigure;
             }
         }
+    }
+
+    private Ray RaycastFromMiddleOfScreen()
+    {
+        Vector3 point = new Vector3(Camera.main.pixelWidth * 0.5f, Camera.main.pixelHeight * 0.5f);
+        Ray ray = Camera.main.ScreenPointToRay(point);
+        return ray;
     }
 
     public void Place()
