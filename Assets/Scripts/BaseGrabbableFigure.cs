@@ -37,7 +37,7 @@ public abstract class BaseGrabbableFigure : MonoBehaviour, IAbleToBeGrabbed
         else
         {
             _magnetizedMod = true;
-            MagnetizeToSurface();
+            MagnetizeToSurface(raycastHit);
         }
     }
 
@@ -63,7 +63,7 @@ public abstract class BaseGrabbableFigure : MonoBehaviour, IAbleToBeGrabbed
 
     protected bool ThereAreNoConflictingColliders => _conflictingColliders.Count == 0;
 
-    protected abstract void MagnetizeToSurface();
+    protected abstract void MagnetizeToSurface(RaycastHit raycastHit);
 
     private void OnTriggerEnter(Collider other) => _conflictingColliders.Add(other);
 
