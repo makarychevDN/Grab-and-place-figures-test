@@ -2,13 +2,21 @@ using UnityEngine;
 
 public class PlayerInput : MonoBehaviour
 {
-    [SerializeField] private Character character;
+    [SerializeField] private IMovable movable;
     [SerializeField] private float sensitivityHorizontal;
     [SerializeField] private float sensitivityVertical;
 
+    private void Awake()
+    {
+        movable = GetComponent<IMovable>();
+    }
+
     void Update()
     {
-        character.Move(new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical")));
-        character.Rotate(new Vector2(Input.GetAxis("Mouse X") * sensitivityHorizontal, Input.GetAxis("Mouse Y") * sensitivityVertical));
+        if (movable == null)
+            return;
+
+        movable.Move(new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical")));
+        movable.Rotate(new Vector2(Input.GetAxis("Mouse X") * sensitivityHorizontal, Input.GetAxis("Mouse Y") * sensitivityVertical));
     }
 }

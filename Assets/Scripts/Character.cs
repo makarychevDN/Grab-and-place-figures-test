@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Character : MonoBehaviour
+public class Character : MonoBehaviour, IMovable
 {
     [SerializeField] private float speed;
     [SerializeField] private CharacterController characterController;
