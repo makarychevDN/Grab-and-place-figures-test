@@ -3,23 +3,29 @@ using UnityEngine;
 
 public abstract class BaseGrabbableFigure : MonoBehaviour, IAbleToBeGrabbed
 {
-    [SerializeField] private Material defaultMaterial;
-    [SerializeField] private Material placableMaterial;
-    [SerializeField] private Material unplacableMaterial;
-    [SerializeField] private Renderer figureRenderer;
-    [SerializeField] private Collider figureCollider;
-    [SerializeField] private List<string> availableSurfacesLayersToMagnetize;
-    private HashSet<Collider> _conflictingColliders = new();
-    private bool _magnetizedMod;
+    [Header("Links")]
+    [SerializeField] protected Renderer figureRenderer;
+    [SerializeField] protected Collider figureCollider;
 
-    public void BecameGrabbed()
+    [Header("Materials")]
+    [SerializeField] protected Material defaultMaterial;
+    [SerializeField] protected Material placableMaterial;
+    [SerializeField] protected Material unplacableMaterial;
+
+    [Header("Layers")]
+    [SerializeField] protected List<string> availableSurfacesLayersToMagnetize;
+
+    protected HashSet<Collider> _conflictingColliders = new();
+    protected bool _magnetizedMod;
+
+    public virtual void BecameGrabbed()
     {
         figureCollider.isTrigger = true;
         figureRenderer.material = placableMaterial;
         gameObject.layer = LayerMask.NameToLayer("Ignore Raycast");
     }
 
-    public void BecamePlaced()
+    public virtual void BecamePlaced()
     {
         figureCollider.isTrigger = false;
         figureRenderer.material = defaultMaterial;
@@ -30,14 +36,14 @@ public abstract class BaseGrabbableFigure : MonoBehaviour, IAbleToBeGrabbed
     {
         if (CheckSurfaceIsAvailavleToMagnetize(raycastHit, head, maxDistancFromHeadeWhenPlaceable))
         {
-            _magnetizedMod = false;
-            transform.position = raycastHit.point;
-            UpdateMaterial(unplacableMaterial);
+            _magnetizedMod = true;
+            MagnetizeToSurface(raycastHit);
         }
         else
         {
-            _magnetizedMod = true;
-            MagnetizeToSurface(raycastHit);
+            _magnetizedMod = false;
+            transform.position = head.position + head.forward * distanceFromHeadWhenUnplacable;
+            UpdateMaterial(unplacableMaterial);
         }
     }
 
@@ -50,10 +56,10 @@ public abstract class BaseGrabbableFigure : MonoBehaviour, IAbleToBeGrabbed
     {
         return raycastHit.collider != null 
             && Vector3.Distance(head.transform.position, raycastHit.point) < maximumDistance
-            && availableSurfacesLayersToMagnetize.Contains(raycastHit.transform.gameObject.layer.ToString());
+            && availableSurfacesLayersToMagnetize.Contains(LayerMask.LayerToName(raycastHit.transform.gameObject.layer));
     }
 
-    private void UpdateMaterial(Material material)
+    protected void UpdateMaterial(Material material)
     {
         if (figureRenderer.material == material)
             return;
