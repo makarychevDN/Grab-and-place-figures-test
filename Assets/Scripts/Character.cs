@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Character : MonoBehaviour, IMovable
+public class Character : MonoBehaviour, IMovable, IAbleToGrab
 {
     [SerializeField] private float speed;
     [SerializeField] private CharacterController characterController;
@@ -23,5 +23,15 @@ public class Character : MonoBehaviour, IMovable
         _headRotationAngle -= input.y;
         _headRotationAngle = Mathf.Clamp(_headRotationAngle, _minHeadRotationAngle, _maxHeadRotationAngle);
         head.transform.localEulerAngles = new Vector3(_headRotationAngle, 0, 0);
+    }
+
+    public void Grab()
+    {
+        print("Grab!!!");
+    }
+
+    public void Place()
+    {
+        throw new System.NotImplementedException();
     }
 }
